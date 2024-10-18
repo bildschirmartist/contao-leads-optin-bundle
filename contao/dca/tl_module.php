@@ -85,5 +85,5 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInUserInteractionSubmit'] = [
     'exclude' => true,
     'inputType' => 'text',
     'eval' => ['tl_class' => 'w50'],
-    'sql' => "varchar(128) NOT NULL default ''",
+    'sql' => "varchar(256) NOT NULL default ''",
 ];

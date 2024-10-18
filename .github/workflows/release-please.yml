@@ -14,7 +14,7 @@ jobs:
               uses: google-github-actions/release-please-action@v4
               with:
                   release-type: php
-                  package-name: cgoit/contao-leads-optin
+                  package-name: cgoit/contao-leads-optin-bundle
                   default-branch: main
                   token: ${{secrets.GITHUB_TOKEN}}
                   bump-minor-pre-major: true

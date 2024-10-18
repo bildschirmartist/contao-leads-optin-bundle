@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Cgoit\LeadsOptinBundle\Controller\Module;
 
+use BugBuster\BotDetection\ModuleBotDetection;
 use Cgoit\LeadsOptinBundle\Trait\TokenTrait;
 use Cgoit\LeadsOptinBundle\Util\Constants;
 use Codefog\HasteBundle\Form\Form;
@@ -34,7 +35,6 @@ use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Terminal42\NotificationCenterBundle\NotificationCenter;
-use Terminal42\NotificationCenterBundle\Util\FileUploadNormalizer;
 
 /**
  * Provides the frontend module to handle the optin process.
@@ -55,12 +55,14 @@ class LeadsOptInModule extends AbstractFrontendModuleController
 
     public const TYPE = 'leadsoptin';
 
+    private readonly ModuleBotDetection $botDetection;
+
     public function __construct(
         private readonly NotificationCenter $notificationCenter,
-        private readonly FileUploadNormalizer $fileUploadNormalizer,
         private readonly Connection $db,
         private readonly StringParser $stringParser,
     ) {
+        $this->botDetection = new ModuleBotDetection();
     }
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
@@ -68,7 +70,7 @@ class LeadsOptInModule extends AbstractFrontendModuleController
         $token = Input::get('token');
         $template->errorMessage = $model->leadOptInErrorMessage;
 
-        if (!$token) {
+        if (!$token || $this->botDetection->checkBotAllTests()) {
             $template->isError = true;
 
             return $template->getResponse();
@@ -128,8 +130,6 @@ class LeadsOptInModule extends AbstractFrontendModuleController
 
         $formConfig = $form->row();
         $tokens = $this->generateTokens(
-            $this->notificationCenter,
-            $this->fileUploadNormalizer,
             $this->db,
             $this->stringParser,
             StringUtil::deserialize($arrLead['post_data'], true),
@@ -149,15 +149,15 @@ class LeadsOptInModule extends AbstractFrontendModuleController
         if (isset($GLOBALS['TL_HOOKS']['onLeadOptinSuccess']) && \is_array($GLOBALS['TL_HOOKS']['onLeadOptinSuccess'])) {
             foreach ($GLOBALS['TL_HOOKS']['onLeadOptinSuccess'] as $callback) {
                 if (\is_array($callback)) {
-                    System::importStatic($callback[0])->{$callback[1]}($arrLead, $tokens, $this);
+                    System::importStatic($callback[0])->{$callback[1]}($arrLead, $tokens, $model);
                 } elseif (\is_callable($callback)) {
-                    $callback($arrLead, $tokens, $this);
+                    $callback($arrLead, $tokens, $model);
                 }
             }
         }
 
-        if (null !== $model->leadOptInSuccessNotification) {
-            $bulkyItemsStamp = $this->processBulkyItems($this->notificationCenter, $this->fileUploadNormalizer, $tokens, StringUtil::deserialize($arrLead['optin_files'], true));
+        if (!empty($model->leadOptInSuccessNotification)) {
+            $bulkyItemsStamp = $this->processBulkyItems($this->notificationCenter, $tokens, StringUtil::deserialize($arrLead['optin_files'], true));
             $stamps = $this->notificationCenter->createBasicStampsForNotification((int) $model->leadOptInSuccessNotification, $tokens, $GLOBALS['TL_LANGUAGE']);
 
             if (null !== $bulkyItemsStamp) {

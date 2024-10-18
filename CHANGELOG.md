@@ -1,5 +1,57 @@
 # Changelog
 
+## [3.1.1](https://github.com/cgoIT/contao-leads-optin-bundle/compare/v3.1.0...v3.1.1) (2024-10-16)
+
+
+### Bug Fixes
+
+* fix notification check in LeadsOptInModule ([1ac991d](https://github.com/cgoIT/contao-leads-optin-bundle/commit/1ac991d92660b02a5b87c1d8b9c0a9beb92dabc7))
+
+## [3.1.0](https://github.com/cgoIT/contao-leads-optin-bundle/compare/v3.0.8...v3.1.0) (2024-09-16)
+
+
+### Features
+
+* added bot detection to prevent token confirmation by mistake ([b5f7abb](https://github.com/cgoIT/contao-leads-optin-bundle/commit/b5f7abb85b75cc3efaa452fe7e0e6e3ef491011d))
+
+## [3.0.8](https://github.com/cgoIT/contao-leads-optin-bundle/compare/v3.0.7...v3.0.8) (2024-06-25)
+
+
+### Bug Fixes
+
+* fix ecs findings ([1c1c85c](https://github.com/cgoIT/contao-leads-optin-bundle/commit/1c1c85cfb66c318a5891e75f0769da5101644af6))
+* fix some bugs in handling uploaded files ([b02df77](https://github.com/cgoIT/contao-leads-optin-bundle/commit/b02df7704e667854025de1e9577e47c76e31bd91))
+
+## [3.0.7](https://github.com/cgoIT/contao-leads-optin-bundle/compare/v3.0.6...v3.0.7) (2024-06-16)
+
+
+### Bug Fixes
+
+* add shadow dependencies ([25b8bda](https://github.com/cgoIT/contao-leads-optin-bundle/commit/25b8bda0641f2971179ecb43364e1540474134a1))
+* fix handling of uploaded files ([e252fcb](https://github.com/cgoIT/contao-leads-optin-bundle/commit/e252fcb0243c43934e9f21448aa42aec3d94b6e0))
+* fix handling of uploaded files ([c581c70](https://github.com/cgoIT/contao-leads-optin-bundle/commit/c581c70794f02c05612e9f4c2c8ad235452fe370))
+
+## [3.0.6](https://github.com/cgoIT/contao-leads-optin-bundle/compare/v3.0.5...v3.0.6) (2024-04-10)
+
+
+### Bug Fixes
+
+* fix errors if $arrFiles is null ([678316c](https://github.com/cgoIT/contao-leads-optin-bundle/commit/678316cada121803f08a427bb37ff7b419bb18bd))
+
+## [3.0.5](https://github.com/cgoIT/contao-leads-optin-bundle/compare/v3.0.4...v3.0.5) (2024-04-04)
+
+
+### Bug Fixes
+
+* change column types to prevent "row to large" errors ([d70cbb2](https://github.com/cgoIT/contao-leads-optin-bundle/commit/d70cbb251179ac61d93e60e8ee58b36a71ff00c0))
+
+## [3.0.4](https://github.com/cgoIT/contao-leads-optin-bundle/compare/v3.0.3...v3.0.4) (2024-03-28)
+
+
+### Bug Fixes
+
+* simplification with file handling ([d04781c](https://github.com/cgoIT/contao-leads-optin-bundle/commit/d04781c4bd16aaf0349ac0f6989baa8755504052))
+
 ## [3.0.3](https://github.com/cgoIT/contao-leads-optin-bundle/compare/v3.0.2...v3.0.3) (2024-03-22)
 
 

@@ -17,11 +17,11 @@ use Cgoit\LeadsOptinBundle\Trait\TokenTrait;
 use Cgoit\LeadsOptinBundle\Util\Constants;
 use Codefog\HasteBundle\StringParser;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
+use Contao\Environment;
 use Contao\Form;
 use Contao\PageModel;
 use Doctrine\DBAL\Connection;
 use Terminal42\NotificationCenterBundle\NotificationCenter;
-use Terminal42\NotificationCenterBundle\Util\FileUploadNormalizer;
 
 /**
  * Provides several function to access leads hooks and send notifications.
@@ -33,7 +33,6 @@ class ProcessFormDataHook
 
     public function __construct(
         private readonly NotificationCenter $notificationCenter,
-        private readonly FileUploadNormalizer $fileUploadNormalizer,
         private readonly Connection $db,
         private readonly StringParser $stringParser,
     ) {
@@ -76,8 +75,6 @@ class ProcessFormDataHook
             $this->db->update('tl_lead', $set, ['id' => $lead]);
 
             $tokens = $this->generateTokens(
-                $this->notificationCenter,
-                $this->fileUploadNormalizer,
                 $this->db,
                 $this->stringParser,
                 $postData,
@@ -89,7 +86,7 @@ class ProcessFormDataHook
             $tokens['optin_token'] = $token;
             $tokens['optin_url'] = $this->generateOptInUrl($token, $formConfig);
 
-            $bulkyItemsStamp = $this->processBulkyItems($this->notificationCenter, $this->fileUploadNormalizer, $tokens, $arrFiles);
+            $bulkyItemsStamp = $this->processBulkyItems($this->notificationCenter, $tokens, $arrFiles ?: []);
             $stamps = $this->notificationCenter->createBasicStampsForNotification((int) $formConfig['leadOptInNotification'], $tokens, $GLOBALS['TL_LANGUAGE']);
 
             if (null !== $bulkyItemsStamp) {
@@ -107,13 +104,18 @@ class ProcessFormDataHook
      */
     private function generateOptInUrl(string $token, array $formConfig): string
     {
-        $page = $GLOBALS['objPage'];
+        $url = Environment::get('uri');
 
         if ($formConfig['leadOptInTarget']) {
             $page = PageModel::findWithDetails($formConfig['leadOptInTarget']);
+
+            try {
+                $url = $page->getAbsoluteUrl();
+            } catch (\Exception $e) {
+                // Do nothing
+            }
         }
 
-        $url = $page->getAbsoluteUrl();
         $parameter = '?token='.$token;
 
         return $url.$parameter;

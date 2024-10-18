@@ -50,7 +50,7 @@ class Lead
         return Image::getHtml(
             $iconPath.$icon,
             '',
-            'title="'.sprintf(
+            'title="'.\sprintf(
                 $GLOBALS['TL_LANG']['tl_lead']['optin_label'],
                 $row['optin_tstamp'] ? Date::parse(
                     $GLOBALS['TL_CONFIG']['datimFormat'],

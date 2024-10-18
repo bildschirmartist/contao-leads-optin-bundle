@@ -20,7 +20,6 @@ use Doctrine\DBAL\Exception;
 use Terminal42\NotificationCenterBundle\BulkyItem\FileItem;
 use Terminal42\NotificationCenterBundle\NotificationCenter;
 use Terminal42\NotificationCenterBundle\Parcel\Stamp\BulkyItemsStamp;
-use Terminal42\NotificationCenterBundle\Util\FileUploadNormalizer;
 
 trait TokenTrait
 {
@@ -34,7 +33,7 @@ trait TokenTrait
      *
      * @return array<mixed>
      */
-    protected function generateTokens(NotificationCenter $notificationCenter, FileUploadNormalizer $fileUploadNormalizer, Connection $db, StringParser $stringParser, array $arrData, array $arrForm, array $arrFiles, array $arrLabels, string $delimiter = ', '): array
+    protected function generateTokens(Connection $db, StringParser $stringParser, array $arrData, array $arrForm, array $arrFiles, array $arrLabels, string $delimiter = ', '): array
     {
         $arrTokens = [];
         $arrTokens['raw_data'] = '';
@@ -70,11 +69,13 @@ trait TokenTrait
         // Upload fields
         $arrFileNames = [];
 
-        foreach ($fileUploadNormalizer->normalize($arrFiles) as $files) {
-            foreach ($files as $file) {
+        foreach ($arrFiles as $file) {
+            if (\array_key_exists('uploaded', $file) && $file['uploaded']) {
                 $arrFileNames[] = $file['name'];
             }
         }
+
+        $arrFileNames = array_unique($arrFileNames);
 
         $arrTokens['filenames'] = implode($delimiter, $arrFileNames);
 
@@ -85,21 +86,28 @@ trait TokenTrait
      * @param array<mixed> $arrTokens
      * @param array<mixed> $arrFiles
      */
-    private function processBulkyItems(NotificationCenter $notificationCenter, FileUploadNormalizer $fileUploadNormalizer, array &$arrTokens, array $arrFiles): BulkyItemsStamp|null
+    private function processBulkyItems(NotificationCenter $notificationCenter, array &$arrTokens, array $arrFiles): BulkyItemsStamp|null
     {
         $bulkyItemVouchers = [];
 
-        foreach ($fileUploadNormalizer->normalize($arrFiles) as $k => $files) {
-            $vouchers = [];
+        foreach ($arrFiles as $key => $file) {
+            if ($this->isAssocArray($file)) {
+                $fileItem = FileItem::fromPath($file['tmp_name'], $file['name'], $file['type'], $file['size']);
+                $voucher = $notificationCenter->getBulkyGoodsStorage()->store($fileItem);
+                $arrTokens['form_'.$key] = $voucher;
+                $bulkyItemVouchers[] = $voucher;
+            } else {
+                foreach ($file as $upload) {
+                    if (!\is_array($upload) && !\array_key_exists('tmp_name', (array) $upload)) {
+                        throw new \InvalidArgumentException('$value must be an array normalized by the FileUploadNormalizer service.');
+                    }
 
-            foreach ($files as $file) {
-                $fileItem = \is_resource($file['stream']) ?
-                    FileItem::fromStream($file['stream'], $file['name'], $file['type'], $file['size']) :
-                    FileItem::fromPath($file['tmp_name'], $file['name'], $file['type'], $file['size']);
-                $vouchers[] = $notificationCenter->getBulkyGoodsStorage()->store($fileItem);
+                    $fileItem = FileItem::fromPath($upload['tmp_name'], $upload['name'], $upload['type'], $upload['size']);
+                    $voucher = $notificationCenter->getBulkyGoodsStorage()->store($fileItem);
+                    $arrTokens['form_'.$key] = $voucher;
+                    $bulkyItemVouchers[] = $voucher;
+                }
             }
-            $arrTokens['form_'.$k] = implode(',', $vouchers);
-            $bulkyItemVouchers = array_merge($bulkyItemVouchers, $vouchers);
         }
 
         if (!empty($bulkyItemVouchers)) {
@@ -173,5 +181,19 @@ trait TokenTrait
                 SQL,
             [$formId],
         );
+    }
+
+    /**
+     * @param array<mixed> $arr
+     *
+     * @return bool
+     */
+    private function isAssocArray(array $arr)
+    {
+        if ([] === $arr) {
+            return false;
+        }
+
+        return array_keys($arr) !== range(0, \count($arr) - 1);
     }
 }

@@ -8,7 +8,7 @@
     "optin",
     "notification_center"
   ],
-  "version": "3.0.3",
+  "version": "3.1.1",
   "type": "contao-bundle",
   "homepage": "https://cgo-it.de",
   "license": "LGPL-3.0+",
@@ -33,17 +33,24 @@
   "require": {
     "php": "^8.1 || ^8.2 || ^8.3",
     "contao/core-bundle": "^4.13 || ^5.3",
-    "symfony/dependency-injection": "^5.4 || ^6.1",
-    "symfony/http-kernel": "^5.4 || ^6.1",
     "codefog/contao-haste": "^5.1",
+    "doctrine/dbal": "^3.3",
+    "symfony/config": "^5.4 || ^6.0",
+    "symfony/dependency-injection": "^5.4 || ^6.1",
+    "symfony/expression-language": "^5.4 || ^6.0",
+    "symfony/filesystem": "^5.4 || ^6.0",
+    "symfony/http-foundation": "^5.4 || ^6.1",
+    "symfony/http-kernel": "^5.4 || ^6.1",
+    "symfony/translation-contracts": "^2.3 || ^3.0",
+    "psr/log": "^2.0 || ^3.0",
     "terminal42/contao-leads": "^3.0",
     "terminal42/notification_center": "^2.0",
+    "bugbuster/contao-botdetection-bundle": "^1.8",
     "ext-mbstring": "*"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.3.1",
     "phpunit/phpunit": "^10.3",
-    "symfony/phpunit-bridge": "^7.0",
     "terminal42/contao-build-tools": "dev-main"
   },
   "conflict": {
@@ -75,7 +82,8 @@
       "@unit-tests",
       "@cs-fixer",
       "@rector",
-      "@phpstan"
+      "@phpstan",
+      "@depcheck"
     ],
     "unit-tests": "@php vendor/bin/phpunit --colors=always"
   }
