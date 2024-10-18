@@ -1,5 +1,47 @@
 # Changelog
 
+## [3.1.0](https://github.com/bildschirmartist/contao-leads-optin-bundle/compare/v3.0.0...v3.1.0) (2024-10-18)
+
+
+### Features
+
+* added bot detection to prevent token confirmation by mistake ([b5f7abb](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/b5f7abb85b75cc3efaa452fe7e0e6e3ef491011d))
+
+
+### Bug Fixes
+
+* add shadow dependencies ([25b8bda](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/25b8bda0641f2971179ecb43364e1540474134a1))
+* change column types to prevent "row to large" errors ([d70cbb2](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/d70cbb251179ac61d93e60e8ee58b36a71ff00c0))
+* correct composer.json ([0ea965c](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/0ea965c6a1f92e372a2d736ca7ad1b0292f071c3))
+* fix ecs findings ([1c1c85c](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/1c1c85cfb66c318a5891e75f0769da5101644af6))
+* fix errors if $arrFiles is null ([678316c](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/678316cada121803f08a427bb37ff7b419bb18bd))
+* fix handling of uploaded files ([e252fcb](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/e252fcb0243c43934e9f21448aa42aec3d94b6e0))
+* fix handling of uploaded files ([c581c70](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/c581c70794f02c05612e9f4c2c8ad235452fe370))
+* fix notification check in LeadsOptInModule ([1ac991d](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/1ac991d92660b02a5b87c1d8b9c0a9beb92dabc7))
+* fix some bugs in handling uploaded files ([b02df77](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/b02df7704e667854025de1e9577e47c76e31bd91))
+* fixed code style ([ecf13ae](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/ecf13aecfcb90093634bde5a4dac897cddb20ff6))
+* Handle RouteParametersException on e.g. news detail pages ([76225d6](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/76225d6773581fffc5e43879604f8834a8327f4f))
+* remove obsolete services from di.yml ([7b0768d](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/7b0768d3b5dd6d8802ba81337f31a058ea6efff0))
+* removed leading whitespaces to pass code style check ([c8c6a19](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/c8c6a19fdae2d51ac35fd02948a6467f869b22fb))
+* removed use Exception ([92ddcb1](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/92ddcb154220e1a2ce5a2c8ffbb5971a50454fb2))
+* simplification with file handling ([d04781c](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/d04781c4bd16aaf0349ac0f6989baa8755504052))
+
+
+### Miscellaneous Chores
+
+* fix ecs errors ([0accf97](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/0accf970e952aba49750807a19cadf725c068a03))
+* **main:** release 3.0.0 ([a14053c](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/a14053cfbc1c917fa6bee653fc2963c584a4a7f5))
+* **main:** release 3.0.1 ([5bc5dff](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/5bc5dff268d76b7e93692244d2a15f734432b23f))
+* **main:** release 3.0.2 ([268a25e](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/268a25e78859fa610daed36c7a94ee22e5869c62))
+* **main:** release 3.0.3 ([dd85926](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/dd859268a05eb8f91660b608756bf1c7f105a851))
+* **main:** release 3.0.4 ([7470191](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/74701911c2cbdfb14fdd5cdeab55da8622a8a2a8))
+* **main:** release 3.0.5 ([97b52d0](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/97b52d0233435b18e7b0a45da0279d2d3e1aff92))
+* **main:** release 3.0.6 ([bc71415](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/bc71415ad41f07d6557413de30603792f7491224))
+* **main:** release 3.0.7 ([c7f26fa](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/c7f26fa2421a2889be71a9a050f566909aa4459d))
+* **main:** release 3.0.8 ([03b6149](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/03b614949708828fa71340518209fb75e4d03a29))
+* **main:** release 3.1.0 ([5fcd630](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/5fcd6302789f2133dcb65b68aa90819dd0e01ded))
+* **main:** release 3.1.1 ([ad5eef5](https://github.com/bildschirmartist/contao-leads-optin-bundle/commit/ad5eef51a207f6752470abfa184dd52467f964e4))
+
 ## [3.0.0](https://github.com/bildschirmartist/contao-leads-optin-bundle/compare/v3.1.1...v3.0.0) (2024-10-18)
 
 
